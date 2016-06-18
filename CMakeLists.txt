@@ -136,11 +136,7 @@ if (APPLE)
 	find_library(CoreFoundation CoreFoundation)
 	find_library(IOKit IOKit)
 	target_link_libraries(${PROJECT_NAME} ${CoreFoundation} ${IOKit} ${ObjC})
-elseif (WIN32 OR MSYS OR MINGW)
-	find_library(WSOCK32_LIBRARY wsock32)
-	find_library(WS2_32_LIBRARY ws2_32)
-
-endif()
+endif ()
 
 add_executable(st-flash src/tools/flash.c)
 target_link_libraries(st-flash ${PROJECT_NAME})
@@ -153,7 +149,7 @@ add_executable(st-util src/gdbserver/gdb-remote.c
                        src/gdbserver/gdb-server.c
                        src/gdbserver/gdb-server.h)
 if (WIN32 OR MSYS OR MINGW)
-	target_link_libraries(st-util ${PROJECT_NAME} ${WS2_32_LIBRARY} ${WSOCK32_LIBRARY})
+	target_link_libraries(st-util wsock32 ws2_32 ${PROJECT_NAME})
 else ()
 	target_link_libraries(st-util ${PROJECT_NAME})
 endif ()
