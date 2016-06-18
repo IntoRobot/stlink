@@ -118,6 +118,10 @@ set(STLINK_SOURCE
 	src/flash_loader.c
 )
 
+if (WIN32 OR MSYS OR MINGW)
+	set (STLINKS_SOURCE "${STLINK_SOURCE} src/mmap.c") # TODO deprecate...
+endif ()
+
 include_directories(${LIBUSB_INCLUDE_DIR})
 include_directories(include)
 include_directories(src/mingw)
