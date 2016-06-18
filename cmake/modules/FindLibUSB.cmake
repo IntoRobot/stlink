@@ -23,7 +23,7 @@ if(WIN32 OR MINGW OR MSYS)
 			SHOW_PROGRESS)
 	endif ()
 
-	execute_process(COMMAND ${ZIP_LOCATION} x -y ${LIBUSB_WIN_ARCHIVE_PATH} -o ${LIBUSB_WIN_OUTPUT_FOLDER})
+	execute_process(COMMAND ${ZIP_LOCATION} x -y ${LIBUSB_WIN_ARCHIVE_PATH} -o${LIBUSB_WIN_OUTPUT_FOLDER})
 endif()
 
 find_path(LIBUSB_include_DIR NAMES libusb.h
