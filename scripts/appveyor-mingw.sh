@@ -17,5 +17,5 @@ else
   mv mingw64 /MinGW
 fi
 cd build
-cmake -D ENABLE_TRACE=ON -D BUILD_CLAR=ON .. -G"$GENERATOR"
+cmake .. -G"$GENERATOR"
 cmake --build . --config RelWithDebInfo

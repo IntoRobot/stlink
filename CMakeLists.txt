@@ -47,7 +47,7 @@ if(WIN32)
 endif()
 
 find_package(LibUSB REQUIRED)
-if (NOT APPLE)
+if (NOT APPLE AND NOT WIN32)
 	find_package(PkgConfig)
 	pkg_check_modules(gtk gtk+-3.0)
 endif ()
