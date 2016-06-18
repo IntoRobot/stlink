@@ -149,7 +149,7 @@ add_executable(st-util src/gdbserver/gdb-remote.c
                        src/gdbserver/gdb-server.c
                        src/gdbserver/gdb-server.h)
 if (WIN32 OR MSYS OR MINGW)
-	target_link_libraries(st-util wsock32 ws2_32 ${PROJECT_NAME})
+	target_link_libraries(st-util ${PROJECT_NAME} wsock32 ws2_32)
 else ()
 	target_link_libraries(st-util ${PROJECT_NAME})
 endif ()
