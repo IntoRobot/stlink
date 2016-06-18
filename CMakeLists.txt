@@ -41,6 +41,11 @@ else ()
 	set (STLINK_PACKAGE_VERSION "Unknown")
 endif()
 
+if(WIN32)
+	find_package(7Zip REQUIRED)
+	message(STATUS "7Zip Location: " ${ZIP_LOCATION})
+endif()
+
 find_package(LibUSB REQUIRED)
 if (NOT APPLE)
 	find_package(PkgConfig)
