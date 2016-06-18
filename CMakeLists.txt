@@ -139,7 +139,7 @@ if (APPLE)
 elseif (WIN32 OR MSYS OR MINGW)
 	find_library(WSOCK32_LIBRARY wsock32)
 	find_library(WS2_32_LIBRARY ws2_32)
-	target_link_libraries(${PROJECT_NAME} ${WS2_32_LIBRARY} ${WSOCK32_LIBRARY})
+
 endif()
 
 add_executable(st-flash src/tools/flash.c)
@@ -152,7 +152,11 @@ add_executable(st-util src/gdbserver/gdb-remote.c
                        src/gdbserver/gdb-remote.h
                        src/gdbserver/gdb-server.c
                        src/gdbserver/gdb-server.h)
-target_link_libraries(st-util ${PROJECT_NAME})
+if (WIN32 OR MSYS OR MINGW)
+	target_link_libraries(st-util ${PROJECT_NAME} ${WS2_32_LIBRARY} ${WSOCK32_LIBRARY})
+else ()
+	target_link_libraries(st-util ${PROJECT_NAME})
+endif ()
 
 install(TARGETS ${PROJECT_NAME} st-flash st-util st-info
         RUNTIME DESTINATION bin
