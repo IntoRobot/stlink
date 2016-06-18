@@ -119,7 +119,7 @@ set(STLINK_SOURCE
 )
 
 if (WIN32 OR MSYS OR MINGW)
-	set (STLINK_SOURCE "${STLINK_SOURCE} src/mmap.c") # TODO deprecate...
+	set (STLINK_SOURCE "${STLINK_SOURCE};src/mmap.c") # TODO deprecate...
 endif ()
 
 include_directories(${LIBUSB_INCLUDE_DIR})
