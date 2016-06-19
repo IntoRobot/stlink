@@ -44,14 +44,21 @@ else()
 	set(LIBUSB_NAME usb-1.0)
 endif()
 
-find_library(LIBUSB_LIBRARY NAMES ${LIBUSB_NAME}
-	HINTS
-	/usr
-	/usr/local
-	/opt
-	${LIBUSB_WIN_OUTPUT_FOLDER}/MinGW32/static
-	${LIBUSB_WIN_OUTPUT_FOLDER}/MinGW64/static
-)
+if (MSYS OR MINGW)
+	if (CMAKE_SIZEOF_VOID_P EQUAL 8)
+		find_library(LIBUSB_LIBRARY NAMES ${LIBUSB_NAME}
+			HINTS ${LIBUSB_WIN_OUTPUT_FOLDER}/MinGW64/static)
+	else ()
+		find_library(LIBUSB_LIBRARY NAMES ${LIBUSB_NAME}
+			HINTS ${LIBUSB_WIN_OUTPUT_FOLDER}/MinGW32/static)
+	endif ()
+else ()
+	find_library(LIBUSB_LIBRARY NAMES ${LIBUSB_NAME}
+		HINTS
+		/usr
+		/usr/local
+		/opt)
+endif ()
 
 include(FindPackageHandleStandardArgs)
 FIND_PACKAGE_HANDLE_STANDARD_ARGS(Libusb DEFAULT_MSG LIBUSB_LIBRARY LIBUSB_INCLUDE_DIR)
