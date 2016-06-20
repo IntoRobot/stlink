@@ -1,47 +1,23 @@
-Building with MinGW
-===================
+Building with MinGW under Windows
+=================================
 
-from dandev37:
+## Prequistes
 
-Here's a step by step from a clean install to successfully setup MinGW and build
-libusb-1.0 and stlink for MS Windows. Hopefully this helps someone.
+* 7Zip
+* CMake 2.8 or higher
+* MinGW64 GCC toolchain (5.3.0)
 
-1. Install MinGW and MSYS to C:\MinGW with the graphical installer from
-http://sourceforge.net/projects/mingw/files/Installer/mingw-get-setup.exe/download
-and add these packages:
-mingw32-base
-mingw-developer-toolkit
+## Installation
 
-2. Add C:\MinGW\bin to your path.
-Note: a user reports she had to use c:\MinGW\msys\1.0\bin
+1. Install 7Zip from http://www.7-zip.org
+2. Install CMake from https://cmake.org/download
+3. Install MinGW64 from https://sourceforge.net/projects/mingw-w64 (mingw-w64-install.exe)
+4. Git clone or download stlink sourcefiles zip
+5. Create build folder in source
 
-3. Create the C:\MinGW\msys\1.0\etc\fstab file to mount C:\MinGW as /mingw as per
-http://www.mingw.org/wiki/MSYS:
+# Building
 
-#Win32_Path     Mount_Point
-c:/mingw        /mingw
+Check and execute `<source-dir>\scripts\mingw64-build.bat`
 
-4. Download these three glib, pkg-config, pkg-config-dev archives and extract
-contents to C:\MinGW
-http://win32builder.gnome.org/packages/3.6/glib_2.34.3-1_win32.zip
-http://win32builder.gnome.org/packages/3.6/pkg-config_0.28-1_win32.zip
-http://win32builder.gnome.org/packages/3.6/pkg-config-dev_0.28-1_win32.zip
-
-5. Download latest libusb-1.0 source from
-https://github.com/libusb/libusb (newer repo, includes USB 3.0 hub support)
-OR the old git://git.libusb.org/libusb.git (original repo, NO USB 3.0 support)
-and build (prefix as per http://www.mingw.org/wiki/MSYS)
-
-./autogen.sh
-./configure --prefix=/mingw
-make
-make install
-
-6. Repeat for stlink source from https://github.com/texane/stlink
-
-./autogen.sh
-./configure --prefix=/mingw
-make
-make install
-
-7. Enjoy the fruits of the stlink developers.
+NOTE: when installing different toolchains make sure you edit the path in the `mingw64-build.bat`
+      the build script uses currently `C:\Program Files\mingw-w64\x86_64-5.3.0-win32-sjlj-rt_v4-rev0\mingw64\bin`
