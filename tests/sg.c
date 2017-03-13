@@ -7,8 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "stlink-common.h"
-#include "uglylogging.h"
+#include <stlink.h>
 
 static void __attribute__((unused)) mark_buf(stlink_t *sl) {
     memset(sl->q_buf, 0, sizeof(sl->q_buf));
@@ -26,13 +25,11 @@ static void __attribute__((unused)) mark_buf(stlink_t *sl) {
 }
 
 
-int main(int argc, char *argv[]) {
+int main(void)
+{
     /* Avoid unused parameter warning */
-    (void)argv;
     // set scpi lib debug level: 0 for no debug info, 10 for lots
 
-    switch (argc) {
-    case 1:
         fputs(
                 "\nUsage: stlink-access-test [anything at all] ...\n"
                 "\n*** Notice: The stlink firmware violates the USB standard.\n"
@@ -41,14 +38,10 @@ int main(int argc, char *argv[]) {
                 "*** Unplug the stlink and execute once as root:\n"
                 "modprobe -r usb-storage && modprobe usb-storage quirks=483:3744:i\n\n",
                 stderr);
-        return EXIT_FAILURE;
-    default:
-        break;
-    }
 
     stlink_t *sl = stlink_v1_open(99, 1);
     if (sl == NULL)
-        return EXIT_FAILURE;
+        return 0;
 
     // we are in mass mode, go to swd
     stlink_enter_swd_mode(sl);
@@ -164,15 +157,6 @@ int main(int argc, char *argv[]) {
     stlink_write_mem32(sl, 0x20000000, 1024 * 8); //8kB
     stlink_read_mem32(sl, 0x20000000, 1024 * 6);
     stlink_read_mem32(sl, 0x20000000 + 1024 * 6, 1024 * 2);
-#endif
-#if 1
-    reg regs;
-    stlink_read_all_regs(sl, &regs);
-    stlink_step(sl);
-    fputs("++++++++++ write r0 = 0x12345678\n", stderr);
-    stlink_write_reg(sl, 0x12345678, 0);
-    stlink_read_reg(sl, 0, &regs);
-    stlink_read_all_regs(sl, &regs);
 #endif
 #if 0
     stlink_run(sl);
